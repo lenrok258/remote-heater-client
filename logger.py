@@ -1,21 +1,25 @@
 import datetime
+import os
 
 
-def info(message):
-    __print_log_message("INFO", message)
+class Logger:
+    def __init__(self, file_name):
+        self.file_name = file_name
 
+    def info(self, message):
+        self.__print_log_message("INFO", message)
 
-def warn(message):
-    __print_log_message("WARN", message)
+    def warn(self, message):
+        self.__print_log_message("WARN", message)
 
+    def error(self, message):
+        self.__print_log_message("ERROR", message)
 
-def error(message):
-    __print_log_message("ERROR", message)
+    def __print_log_message(self, level, message):
+        print "[{}] [{}] {} ({})".format(self.__get_date_string(), level, message, self.__get_file_name())
 
+    def __get_file_name(self):
+        return os.path.basename(self.file_name)
 
-def __print_log_message(level, message):
-    print "[{}] [{}] {}".format(__get_date_string(), level, message);
-
-
-def __get_date_string():
-    return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
+    def __get_date_string(self):
+        return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")

@@ -1,12 +1,14 @@
+#!./.env/bin/python
+
 import time
 
 import requests
 
-import logger
+from logger import Logger
 
 REQUEST_INTERVAL_S = 1
 
-print __name__
+logger = Logger(__name__)
 
 
 def send_request():
