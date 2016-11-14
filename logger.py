@@ -1,5 +1,4 @@
 import datetime
-import os
 
 
 class Logger:
@@ -19,7 +18,7 @@ class Logger:
         print "[{}] [{}] {} ({})".format(self.__get_date_string(), level, message, self.__get_file_name())
 
     def __get_file_name(self):
-        return os.path.basename(self.file_name)
+        return self.file_name
 
     def __get_date_string(self):
         return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")

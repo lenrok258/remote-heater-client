@@ -6,7 +6,7 @@ import requests
 
 from logger import Logger
 
-REQUEST_INTERVAL_S = 1
+REQUEST_INTERVAL_S = 60
 
 logger = Logger(__name__)
 
@@ -20,4 +20,5 @@ def send_request():
 
 while True:
     response = send_request()
+    logger.info("About to sleep for {} seconds".format(REQUEST_INTERVAL_S))
     time.sleep(REQUEST_INTERVAL_S)
