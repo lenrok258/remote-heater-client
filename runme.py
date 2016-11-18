@@ -10,9 +10,11 @@ REQUEST_INTERVAL_S = 5
 
 logger = Logger(__name__)
 
+
 def sleep(seconds):
     logger.info("About to sleep for {} seconds".format(REQUEST_INTERVAL_S))
     time.sleep(REQUEST_INTERVAL_S)
+
 
 def send_request():
     response = requests.get("http://localhost:8001")

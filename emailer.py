@@ -1,12 +1,12 @@
 import smtplib
-import json
 
-from logger import Logger 
+from logger import Logger
 
 logger = Logger(__name__)
 
 FROM = 'lenrok.bot@o2.pl'
-TO= 'kornelzemla@gmail.com'
+TO = 'kornelzemla@gmail.com'
+
 
 def send_email(subject, message):
     try:
@@ -21,4 +21,3 @@ def send_email(subject, message):
         logger.info('Successfuly send email to [{}] with content [{}]'.format(TO, message))
     except Exception as e:
         logger.error('Unable to send emial message={}'.format(e))
-
