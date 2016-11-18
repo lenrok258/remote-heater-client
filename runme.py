@@ -4,6 +4,7 @@ import time
 
 import requests
 
+from logger import ErrorId
 from logger import Logger
 
 REQUEST_INTERVAL_S = 5
@@ -12,8 +13,8 @@ logger = Logger(__name__)
 
 
 def sleep(seconds):
-    logger.info("About to sleep for {} seconds".format(REQUEST_INTERVAL_S))
-    time.sleep(REQUEST_INTERVAL_S)
+    logger.info("About to sleep for {} seconds".format(seconds))
+    time.sleep(seconds)
 
 
 def send_request():
@@ -28,6 +29,6 @@ while True:
         response = send_request()
         logger.info(response)
     except Exception as e:
-        logger.error("Error while getting response from server={}".format(e))
+        logger.error("Error while getting response from server={}".format(e), ErrorId.SERVER_CONNECTION_ERROR)
 
     sleep(REQUEST_INTERVAL_S)

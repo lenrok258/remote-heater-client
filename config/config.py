@@ -1,19 +1,22 @@
 import json
+import os.path
 
-__config = None
+CONFIG_FILE_PATH = 'config.json'
+
+config = None
 
 
-def read_config():
-    if os.path.exists('config.json'):
-        with open(path, 'r') as f:
-            __config = json.load(f)
+def __read_config():
+    base_path = os.path.dirname(__file__)
+    file_path = os.path.abspath(os.path.join(base_path, CONFIG_FILE_PATH))
+
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            global config
+            config = json.load(f)
     else:
-        raise MissingFileException("Missing config.json file")
+        raise Exception("Missing %s file" % CONFIG_FILE_PATH)
 
 
-def get():
-    return __config
-
-
-if not __config:
-    read_config
+if config is None:
+    __read_config()

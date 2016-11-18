@@ -1,23 +1,25 @@
 import smtplib
 
-from logger import Logger
+from config.config import config
 
-logger = Logger(__name__)
+config = config['email']
 
-FROM = 'lenrok.bot@o2.pl'
-TO = 'kornelzemla@gmail.com'
+FROM = config['from-login']
+PASSWORD = config['from-password']
+TO = config['to-email-address']
+SUBJECT = config['default-subject']
 
 
-def send_email(subject, message):
+def send_email(message):
     try:
         email_content = """From: %s\nTo: %s\nSubject: %s\n\n%s 
-        """ % (FROM, TO, subject, message)
+        """ % (FROM, TO, SUBJECT, message)
 
         server = smtplib.SMTP_SSL("poczta.o2.pl", 465)
         print 'lenrok-bot'
-        server.login(FROM, 'ZAQwsx123')
+        server.login(FROM, PASSWORD)
         server.sendmail(FROM, TO, email_content)
         server.close()
-        logger.info('Successfuly send email to [{}] with content [{}]'.format(TO, message))
+        print ('Successfuly send email to [{}] with content [{}]'.format(TO, message))
     except Exception as e:
-        logger.error('Unable to send emial message={}'.format(e))
+        print ('Unable to send emial message={}'.format(e))
