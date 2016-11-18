@@ -1,0 +1,8 @@
+{
+    "email": {
+        "from-login": "lenrok.bot@o2.pl",
+        "from-password": "############EMPTY#############",
+        "to-email-address": "kornelzemla@gmail.com",
+        "to-default-subject": "Remote heater message"
+    }
+}

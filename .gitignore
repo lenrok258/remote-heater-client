@@ -2,3 +2,4 @@
 .idea/
 **/*.pyc
 .vscode/
+config/config.json
