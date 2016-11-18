@@ -1,14 +1,13 @@
 from logger import Logger
 
-logger = Logger(__name__)
-
 
 class TempSensor:
+    logger = Logger(__name__)
+
     def __init__(self):
         pass
 
-    @property
     def value(self):
         temp_mock = 20.1;
-        logger.info("Temperature measured is {}".format(temp_mock))
+        self.logger.info("Temperature measured is {}".format(temp_mock))
         return temp_mock

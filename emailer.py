@@ -11,6 +11,9 @@ SUBJECT = config['default-subject']
 
 
 def send_email(message):
+    if config['disable-sending']:
+        return
+
     try:
         email_content = """From: %s\nTo: %s\nSubject: %s\n\n%s 
         """ % (FROM, TO, SUBJECT, message)
