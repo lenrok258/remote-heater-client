@@ -19,7 +19,6 @@ def send_email(message):
         """ % (FROM, TO, SUBJECT, message)
 
         server = smtplib.SMTP_SSL("poczta.o2.pl", 465)
-        print 'lenrok-bot'
         server.login(FROM, PASSWORD)
         server.sendmail(FROM, TO, email_content)
         server.close()

@@ -1,9 +1,9 @@
 {
   "email": {
-    "disable-sending": false,
+    "disable-sending": true,
     "from-login": "lenrok.bot@o2.pl",
-    "from-password": "############EMPTY#############",
+    "from-password": "__EMPTY__",
     "to-email-address": "kornelzemla@gmail.com",
-    "to-default-subject": "Remote heater message"
+    "default-subject": "Greetings from Remote Heater!"
   }
 }
