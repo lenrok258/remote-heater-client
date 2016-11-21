@@ -1,6 +1,6 @@
 {
   "email": {
-    "disable-sending": true,
+    "disable-sending": false,
     "from-login": "lenrok.bot@o2.pl",
     "from-password": "__EMPTY__",
     "to-email-address": "kornelzemla@gmail.com",
