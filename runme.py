@@ -41,10 +41,6 @@ def send_request(current_temp):
     return response.json()
 
 
-def process_response(response):
-    pass
-
-
 def start_looper():
     while True:
         try:
