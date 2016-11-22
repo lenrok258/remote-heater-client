@@ -15,7 +15,7 @@ class TempSensor:
         pass
 
     def value(self):
-        temperature = self.__get_value_from_sensors();
+        temperature = self.__get_value_from_sensors()
         self.logger.info("Temperature measured is {}".format(temperature))
         return temperature
 
@@ -36,10 +36,9 @@ class TempSensor:
         with open(file_path, 'r') as sensor_file:
             sensor_file.readline();
             second_line = sensor_file.readline();
-        temp_value = second_line.split(" ")[9]
-        print "------------------------------------------------{}".format(second_line)
-        temp_float = float(temp_value[2:])
-        return temp_float / 1000
+        temp_string = second_line.split("=")[1]
+        temp_value = int(temp_string)
+        return float(temp_value) / 1000.0
 
 
 class TempSensorException(Exception):

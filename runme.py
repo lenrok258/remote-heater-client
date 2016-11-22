@@ -6,11 +6,13 @@ import requests
 from enum import Enum
 from requests.exceptions import ConnectionError
 
+from config.config import config
 from logger import ErrorId
 from logger import Logger
 from temp_sensor import TempSensor
 
 REQUEST_INTERVAL_SEC = 60
+SERVER_URL = config['server']['url']
 
 logger = Logger(__name__)
 temp_sensor = TempSensor()
@@ -35,17 +37,20 @@ def get_current_temp():
 
 
 def send_request(current_temp):
-    response = requests.get("http://localhost:8001", params={'current_temp': current_temp})
+    response = requests.get(SERVER_URL, params={'current_temp': current_temp})
     return response.json()
+
+
+def process_response(response):
+    pass
 
 
 def start_looper():
     while True:
         try:
-
             current_temp = get_current_temp()
             response = send_request(current_temp)
-
+            process_response(response)
         except ConnectionError as e:
             logger.error("Error while getting response from server={}".format(e), ErrorId.SERVER_CONNECTION_ERROR, e)
         except Exception as e:

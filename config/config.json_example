@@ -1,4 +1,7 @@
 {
+  "server": {
+    "url": "http://localhost:8001"
+  },
   "email": {
     "disable-sending": false,
     "from-login": "lenrok.bot@o2.pl",
