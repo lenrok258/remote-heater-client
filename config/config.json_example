@@ -14,5 +14,9 @@
     "sensor-2-id": "2222222222",
     "file-path-pattern": "/sys/bus/w1/devices/{}/w1_slave",
     "max-tolerated-sensors-difference": 5.0
+  },
+  "heater": {
+    "gpio-1": 20,
+    "gpio-2": 21
   }
 }
