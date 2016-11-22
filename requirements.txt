@@ -1,2 +1,3 @@
 requests
 enum34
+RPi.GPIO
