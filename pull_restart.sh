@@ -7,10 +7,10 @@ if [ ! -z "${ANY_CHANGES}" ]; then
     echo 'New changes found on git. About to pull them and restart Remote Heater client';
     killall runme.py
     git pull --force
-    ./install.sh
 fi;
 
 if [ -z "${RUNME_RUNNING}" ]; then
     echo 'Remote Heater client does not seem to work. About to start it.';
+    ./install.sh
     ./runme.py
 fi;

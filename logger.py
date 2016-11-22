@@ -1,5 +1,6 @@
 import datetime
 import time
+import traceback
 
 from enum import Enum
 
@@ -10,6 +11,7 @@ SAME_ERROR_EMAIL_INTERVAL_SEC = 60 * 60
 
 class ErrorId(Enum):
     SERVER_CONNECTION_ERROR = 1
+    TEMPERATURE_SENSOR_ERROR = 2
 
 
 class Logger:
@@ -24,7 +26,9 @@ class Logger:
     def warn(self, message):
         self.__print_log_message("WARN", message)
 
-    def error(self, message, error_id):
+    def error(self, message, error_id, exception=None):
+        if exception:
+            message += " Exception:" + traceback.format_exc()
         self.__print_log_message("ERROR", message)
         self.__send_email(error_id, message)
 

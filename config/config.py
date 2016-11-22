@@ -18,5 +18,5 @@ def __read_config():
         raise Exception("Missing %s file" % CONFIG_FILE_PATH)
 
 
-if config is None:
+if   config is None:
     __read_config()

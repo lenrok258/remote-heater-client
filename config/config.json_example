@@ -5,5 +5,11 @@
     "from-password": "__EMPTY__",
     "to-email-address": "kornelzemla@gmail.com",
     "default-subject": "Greetings from Remote Heater!"
+  },
+  "temp-sensor": {
+    "sensor-1-id": "1111111111",
+    "sensor-2-id": "2222222222",
+    "file-path-pattern": "/sys/bus/w1/devices/{}/w1_slave",
+    "max-tolerated-sensors-difference": 5.0
   }
 }
