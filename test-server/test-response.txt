@@ -8,9 +8,5 @@ Connection: close
 Content-Type: application/json
 
 {
-    "command": {
-        "key": "TURN_ON_HEATER",
-        "params": {
-        }
-    }
+    "command": "TURN_ON_HEATER"
 }

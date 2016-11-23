@@ -3,7 +3,6 @@
 import time
 
 import requests
-from enum import Enum
 from requests.exceptions import ConnectionError
 
 from config.config import config
@@ -16,11 +15,6 @@ SERVER_URL = config['server']['url']
 
 logger = Logger(__name__)
 temp_sensor = TempSensor()
-
-
-class Actions(Enum):
-    TURN_ON_HEATER = 'TURN_ON_HEATER'
-    TURN_OFF_HEATER = 'TURN_OFF_HEATER'
 
 
 def sleep(seconds):
