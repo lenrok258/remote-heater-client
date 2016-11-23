@@ -6,13 +6,17 @@ import requests
 from requests.exceptions import ConnectionError
 
 from config.config import config
-from heater import Heater
 from logger import ErrorId
 from logger import Logger
 from server_response import Actions
 from server_response import ServerResponse
 from server_response import UnknownCommandException
 from temp_sensor import TempSensor
+
+if config['dev']['local-development']:
+    from heater_mock import Heater
+else:
+    from heater import Heater
 
 REQUEST_INTERVAL_SEC = 60
 SERVER_URL = config['server']['url']

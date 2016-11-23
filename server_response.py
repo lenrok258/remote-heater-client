@@ -1,5 +1,9 @@
 from enum import Enum, unique
 
+from logger import Logger
+
+logger = Logger(__name__)
+
 
 @unique
 class Actions(Enum):
@@ -20,6 +24,9 @@ class ServerResponse:
         if command_string not in Actions.__members__:
             raise UnknownCommandException("Given command={} is not known".format(command_string))
 
+        if command_string is not Actions.LEISURE_TIME:
+            logger.info("Action recieved from server={}".format(command_string))
+            
         return Actions[command_string]
 
 
