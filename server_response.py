@@ -26,7 +26,7 @@ class ServerResponse:
 
         if command_string is not Actions.LEISURE_TIME:
             logger.info("Action recieved from server={}".format(command_string))
-            
+
         return Actions[command_string]
 
 
