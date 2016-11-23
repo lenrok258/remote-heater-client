@@ -12,7 +12,7 @@ class ServerResponse:
     def __init__(self, jsonResponse):
         self.jsonResponse = jsonResponse
 
-    def get_commands(self):
+    def get_command(self):
         command = self.jsonResponse['command']
         return self.__map_command_string_to_command_enum(command)
 
