@@ -4,3 +4,4 @@
 .vscode/
 config/config.json
 logs/
+!.gitkeep

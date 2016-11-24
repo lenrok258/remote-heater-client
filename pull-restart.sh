@@ -11,12 +11,13 @@ ANY_CHANGES=$(git fetch --dry-run 2>&1)
 if [ ! -z "${ANY_CHANGES}" ]; then
     log 'New changes found on git. About to pull them and restart Remote Heater client';
     killall runme.py | tee -a $LOG_FILE
+    git reset --hard | tee -a $LOG_FILE
     git pull --force | tee -a $LOG_FILE
 fi;
 
-RUNME_RUNNING=$(ps cax | grep runme.py)
+IS_RUNNING=$(ps cax | grep runme.py)
 
-if [ -z "${RUNME_RUNNING}" ]; then
+if [ -z "${IS_RUNNING}" ]; then
     log 'Remote Heater client does not seem to work. About to start it.';
     ./install.sh | tee -a $LOG_FILE
     ./.env/bin/python -u ./runme.py | tee -a $LOG_FILE
