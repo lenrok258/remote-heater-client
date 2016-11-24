@@ -65,7 +65,7 @@ def start_looper():
         except ConnectionError as e:
             logger.error("Error while getting response from server={}".format(e), ErrorId.SERVER_CONNECTION_ERROR, e)
         except UnknownCommandException as e:
-            logger.error("Unknown commnad recieved from server={}".format(e), ErrorId.UNKNOWN_COMMAND_ERROR, e)
+            logger.error("Unknown command received from server={}".format(e), ErrorId.UNKNOWN_COMMAND_ERROR, e)
         except Exception as e:
             logger.error("Unknown error while doing important stuff={}".format(e), ErrorId.UNKNOWN_ERROR, e)
 
