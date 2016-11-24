@@ -6,7 +6,7 @@ logger = Logger(__name__)
 
 
 @unique
-class Actions(Enum):
+class Command(Enum):
     TURN_ON_HEATER = 1
     TURN_OFF_HEATER = 2
     LEISURE_TIME = 3
@@ -21,13 +21,17 @@ class ServerResponse:
         return self.__map_command_string_to_command_enum(command)
 
     def __map_command_string_to_command_enum(self, command_string):
-        if command_string not in Actions.__members__:
+        if command_string not in Command.__members__:
             raise UnknownCommandException("Given command={} is not known".format(command_string))
 
-        if command_string is not Actions.LEISURE_TIME:
-            logger.info("Action recieved from server={}".format(command_string))
+        command = Command[command_string]
+        self.__log_received_command(command)
 
-        return Actions[command_string]
+        return command
+
+    def __log_received_command(self, command):
+        if command is not Command.LEISURE_TIME:
+            logger.info("Command received from server={}".format(command.name))
 
 
 class UnknownCommandException(Exception):

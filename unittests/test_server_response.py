@@ -1,7 +1,7 @@
 import json
 from unittest import TestCase
 
-from  server_response import Actions
+from  server_response import Command
 from  server_response import ServerResponse
 from server_response import UnknownCommandException
 
@@ -15,17 +15,17 @@ class ServerResponseTest(TestCase):
     def test_should_return_turn_on_command(self):
         server_response = ServerResponse(ServerResponseTest.JSON_RESPONSE_OK_COMMAND_TURN_ON)
         command = server_response.get_command()
-        self.assertEqual(Actions.TURN_ON_HEATER, command)
+        self.assertEqual(Command.TURN_ON_HEATER, command)
 
     def test_should_return_turn_off_command(self):
         server_response = ServerResponse(ServerResponseTest.JSON_RESPONSE_OK_COMMAND_TURN_OFF)
         command = server_response.get_command()
-        self.assertEqual(Actions.TURN_OFF_HEATER, command)
+        self.assertEqual(Command.TURN_OFF_HEATER, command)
 
     def test_should_return_leisure_time_command(self):
         server_response = ServerResponse(ServerResponseTest.JSON_RESPONSE_OK_COMMAND_LEISURE)
         command = server_response.get_command()
-        self.assertEqual(Actions.LEISURE_TIME, command)
+        self.assertEqual(Command.LEISURE_TIME, command)
 
     def test_raise_exception_on_command_unknown(self):
         server_response = ServerResponse(ServerResponseTest.JSON_RESPONSE_FAIL_COMMAND_UNKNOWN)

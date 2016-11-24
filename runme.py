@@ -8,7 +8,7 @@ from requests.exceptions import ConnectionError
 from config.config import config
 from logger import ErrorId
 from logger import Logger
-from server_response import Actions
+from server_response import Command
 from server_response import ServerResponse
 from server_response import UnknownCommandException
 from temp_sensor import TempSensor
@@ -48,11 +48,11 @@ def process_response(response_json):
     server_response = ServerResponse(response_json)
     command = server_response.get_command()
 
-    if command is Actions.TURN_ON_HEATER:
+    if command is Command.TURN_ON_HEATER:
         heater.turn_on()
-    elif command is Actions.TURN_ON_HEATER:
+    elif command is Command.TURN_ON_HEATER:
         heater.turn_off()
-    elif command is Actions.LEISURE_TIME:
+    elif command is Command.LEISURE_TIME:
         pass
 
 
