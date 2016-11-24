@@ -3,3 +3,4 @@
 **/*.pyc
 .vscode/
 config/config.json
+logs/
