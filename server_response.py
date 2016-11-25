@@ -7,9 +7,9 @@ logger = Logger(__name__)
 
 @unique
 class Command(Enum):
-    TURN_ON_HEATER = 1
-    TURN_OFF_HEATER = 2
-    LEISURE_TIME = 3
+    THON = 'TURN_HEATER_ON'
+    THOFF = 'TURN_HEATER_OFF'
+    LT = 'LEISURE_TIME'
 
 
 class ServerResponse:
@@ -30,7 +30,7 @@ class ServerResponse:
         return command
 
     def __log_received_command(self, command):
-        if command is not Command.LEISURE_TIME:
+        if command is not Command.LT:
             logger.info("Command received from server={}".format(command.name))
 
 

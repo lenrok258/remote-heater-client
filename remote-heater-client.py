@@ -48,11 +48,11 @@ def process_response(response_json):
     server_response = ServerResponse(response_json)
     command = server_response.get_command()
 
-    if command is Command.TURN_ON_HEATER:
+    if command is Command.THON:
         heater.turn_on()
-    elif command is Command.TURN_ON_HEATER:
+    elif command is Command.THOFF:
         heater.turn_off()
-    elif command is Command.LEISURE_TIME:
+    elif command is Command.LT:
         pass
 
 

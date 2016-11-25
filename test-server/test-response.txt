@@ -8,5 +8,5 @@ Connection: close
 Content-Type: application/json
 
 {
-    "command": "TURN_ON_HEATER"
+    "command": "THON"
 }
