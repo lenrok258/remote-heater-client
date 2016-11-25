@@ -27,7 +27,7 @@ heater = Heater()
 
 
 def sleep(seconds):
-    logger.info("About to sleep for {} seconds".format(seconds))
+    #logger.info("About to sleep for {} seconds".format(seconds))
     time.sleep(seconds)
 
 

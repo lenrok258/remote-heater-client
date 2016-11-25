@@ -16,7 +16,7 @@ class TempSensor:
 
     def value(self):
         temperature = self.__get_value_from_sensors()
-        self.logger.info("Temperature measured is {}".format(temperature))
+        # self.logger.info("Temperature measured is {}".format(temperature))
         return temperature
 
     def __get_value_from_sensors(self):

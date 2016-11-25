@@ -23,15 +23,7 @@ class ServerResponse:
     def __map_command_string_to_command_enum(self, command_string):
         if command_string not in Command.__members__:
             raise UnknownCommandException("Given command={} is not known".format(command_string))
-
-        command = Command[command_string]
-        self.__log_received_command(command)
-
-        return command
-
-    def __log_received_command(self, command):
-        if command is not Command.LT:
-            logger.info("Command received from server={}".format(command.name))
+        return Command[command_string]
 
 
 class UnknownCommandException(Exception):
