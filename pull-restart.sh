@@ -14,16 +14,12 @@ if [ ! -z "${ANY_CHANGES}" ]; then
     sleep 5
     git reset --hard | tee -a ${LOG_FILE}
     git pull --force | tee -a ${LOG_FILE}
-else
-    log 'No new changes found in git'
 fi;
 
-IS_RUNNING=$(ps aux | grep -v grep | grep "remote-heater-client")
+IS_RUNNING=$(ps aux | grep -v grep | grep "remote-heater-client.py")
 
 if [ -z "${IS_RUNNING}" ]; then
     log 'Remote Heater client does not seem to work. About to start it.';
     ./install.sh | tee -a ${LOG_FILE}
     ./run-remote-heater-client.sh
-else
-    log 'Remote Heater already started - nothing to do.'
 fi
