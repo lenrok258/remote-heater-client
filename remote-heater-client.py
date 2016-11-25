@@ -6,12 +6,10 @@ import requests
 from requests.exceptions import ConnectionError
 
 from config.config import config
-from heater import Heater
 from logger import ErrorId
 from logger import Logger
-from server_response import Command
-from server_response import ServerResponse
 from server_response import UnknownCommandException
+from server_response_processor import ServerResponseProcessor
 from temp_sensor import TempSensor
 
 REQUEST_INTERVAL_SEC = 60
@@ -19,7 +17,6 @@ SERVER_URL = config['server']['url']
 
 logger = Logger(__name__)
 temp_sensor = TempSensor()
-heater = Heater()
 
 
 def sleep(seconds):
@@ -41,15 +38,7 @@ def send_request(current_temp):
 
 
 def process_response(response_json):
-    server_response = ServerResponse(response_json)
-    command = server_response.get_command()
-
-    if command is Command.THON:
-        heater.turn_on()
-    elif command is Command.THOFF:
-        heater.turn_off()
-    elif command is Command.LT:
-        pass
+    ServerResponseProcessor(response_json).process()
 
 
 def start_looper():

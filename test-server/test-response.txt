@@ -8,5 +8,6 @@ Connection: close
 Content-Type: application/json
 
 {
-    "command": "THON"
+    "command": "THON",
+    "temp": 23
 }

@@ -13,12 +13,15 @@ class Command(Enum):
 
 
 class ServerResponse:
-    def __init__(self, jsonResponse):
-        self.jsonResponse = jsonResponse
+    def __init__(self, json_response):
+        self.jsonResponse = json_response
 
     def get_command(self):
         command = self.jsonResponse['command']
         return self.__map_command_string_to_command_enum(command)
+
+    def get_temperature(self):
+        return self.jsonResponse['temp']
 
     def __map_command_string_to_command_enum(self, command_string):
         if command_string not in Command.__members__:

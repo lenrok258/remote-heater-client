@@ -1,4 +1,3 @@
-import emailer
 from config.config import config
 from logger import Logger
 
@@ -36,4 +35,4 @@ class Heater:
         if new_value != self.previous_value:
             message = "Heater value changed from <<{}>> to <<{}>>".format(self.previous_value, new_value)
             logger.info(message)
-            emailer.send_email(message)
+            self.previous_value = new_value

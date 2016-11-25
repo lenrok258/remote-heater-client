@@ -42,6 +42,5 @@ class TempSensor:
 
 
 class TempSensorException(Exception):
-    def __init__(self, message, errors):
+    def __init__(self, message):
         super(TempSensorException, self).__init__(message)
-        self.errors = errors
