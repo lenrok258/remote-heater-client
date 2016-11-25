@@ -1,8 +1,11 @@
-import RPi.GPIO as GPIO
-
 import emailer
 from config.config import config
 from logger import Logger
+
+if config['dev']['local-development']:
+    import GPIO_mock as GPIO
+else:
+    import RPi.GPIO as GPIO
 
 logger = Logger(__name__)
 
@@ -31,6 +34,6 @@ class Heater:
 
     def log_if_changed(self, new_value):
         if new_value != self.previous_value:
-            message = "Heater value changed from {} to {}", self.previous_value, new_value
+            message = "Heater value changed from <<{}>> to <<{}>>".format(self.previous_value, new_value)
             logger.info(message)
             emailer.send_email(message)
