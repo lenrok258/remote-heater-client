@@ -6,8 +6,6 @@ from enum import Enum
 
 import emailer
 
-SAME_ERROR_EMAIL_INTERVAL_SEC = 60 * 60
-
 
 class ErrorId(Enum):
     SERVER_CONNECTION_ERROR = 1
@@ -17,6 +15,8 @@ class ErrorId(Enum):
 
 
 class Logger:
+    __SAME_ERROR_EMAIL_INTERVAL_SEC = 60 * 60
+
     __error_timestamps = {}
 
     def __init__(self, file_name):
@@ -47,7 +47,7 @@ class Logger:
         if error_id in self.__error_timestamps.keys():
             error_timestamp = self.__error_timestamps[error_id]
             # wait for an hour
-            if (time.time() - error_timestamp) < SAME_ERROR_EMAIL_INTERVAL_SEC:
+            if (time.time() - error_timestamp) < Logger.__SAME_ERROR_EMAIL_INTERVAL_SEC:
                 return
         emailer.send_email("ERROR: %s" % message)
         self.__error_timestamps[error_id] = time.time()

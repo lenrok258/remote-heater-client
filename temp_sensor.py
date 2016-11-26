@@ -1,44 +1,41 @@
-import config.config as config
+import config.config as __config
 from logger import Logger
 
+__logger = Logger(__name__)
 
-class TempSensor:
-    logger = Logger(__name__)
+__config = __config.config['temp-sensor']
+__SENSOR_ID_1 = __config['sensor-1-id']
+__SENSOR_ID_2 = __config['sensor-2-id']
+__SENSOR_BASE_PATH_TEMPLATE = __config['file-path-pattern']
+__SENSOR_MAX_DIFF_TOLERANCE = __config['max-tolerated-sensors-difference']
 
-    config = config.config['temp-sensor']
-    SENSOR_ID_1 = config['sensor-1-id']
-    SENSOR_ID_2 = config['sensor-2-id']
-    SENSOR_BASE_PATH_TEMPLATE = config['file-path-pattern']
-    SENSOR_MAX_DIFF_TOLERANCE = config['max-tolerated-sensors-difference']
 
-    def __init__(self):
-        pass
+def __read_sensor(sensor_id):
+    file_path = __SENSOR_BASE_PATH_TEMPLATE.format(sensor_id)
+    with open(file_path, 'r') as sensor_file:
+        sensor_file.readline()
+        second_line = sensor_file.readline()
+    temp_string = second_line.split("=")[1]
+    temp_value = int(temp_string)
+    return float(temp_value) / 1000.0
 
-    def value(self):
-        temperature = self.__get_value_from_sensors()
-        # self.logger.info("Temperature measured is {}".format(temperature))
-        return temperature
 
-    def __get_value_from_sensors(self):
-        temp_1 = self.__read_sensor(TempSensor.SENSOR_ID_1)
-        temp_2 = self.__read_sensor(TempSensor.SENSOR_ID_2)
-        temp_sensors_diff = abs(temp_1 - temp_2)
+def __get_value_from_sensors():
+    temp_1 = __read_sensor(__SENSOR_ID_1)
+    temp_2 = __read_sensor(__SENSOR_ID_2)
+    temp_sensors_diff = abs(temp_1 - temp_2)
 
-        if temp_sensors_diff > TempSensor.SENSOR_MAX_DIFF_TOLERANCE:
-            raise TempSensorException(
-                "Temp sensors difference = {}, tolerance = {}".format(temp_sensors_diff,
-                                                                      TempSensor.SENSOR_MAX_DIFF_TOLERANCE))
+    if temp_sensors_diff > __SENSOR_MAX_DIFF_TOLERANCE:
+        raise TempSensorException(
+            "Temp sensors difference = {}, tolerance = {}".format(temp_sensors_diff, __SENSOR_MAX_DIFF_TOLERANCE))
 
-        return (temp_1 + temp_2) / 2;
+    return (temp_1 + temp_2) / 2;
 
-    def __read_sensor(self, sensor_id):
-        file_path = TempSensor.SENSOR_BASE_PATH_TEMPLATE.format(sensor_id)
-        with open(file_path, 'r') as sensor_file:
-            sensor_file.readline();
-            second_line = sensor_file.readline();
-        temp_string = second_line.split("=")[1]
-        temp_value = int(temp_string)
-        return float(temp_value) / 1000.0
+
+def value():
+    temperature = __get_value_from_sensors()
+    # self.logger.info("Temperature measured is {}".format(temperature))
+    return temperature
 
 
 class TempSensorException(Exception):
