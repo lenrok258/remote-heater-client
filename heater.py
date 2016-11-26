@@ -16,7 +16,7 @@ class Heater:
     GPIOS = [GPIO_1, GPIO_2]
 
     def __init__(self):
-        self.previous_value = None
+        self.previous_state = None
         pass
 
     def turn_on(self):
@@ -31,8 +31,11 @@ class Heater:
         GPIO.output(Heater.GPIOS, GPIO.LOW)
         self.log_if_changed("off")
 
+    def state(self):
+        return self.previous_state;
+
     def log_if_changed(self, new_value):
-        if new_value != self.previous_value:
-            message = "Heater value changed from <<{}>> to <<{}>>".format(self.previous_value, new_value)
+        if new_value != self.previous_state:
+            message = "Heater value changed from <<{}>> to <<{}>>".format(self.previous_state, new_value)
             logger.info(message)
-            self.previous_value = new_value
+            self.previous_state = new_value

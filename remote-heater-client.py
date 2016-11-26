@@ -31,8 +31,17 @@ def get_current_temp():
 
 
 def send_request(current_temp):
-    response = requests.get(SERVER_URL, params={'current_temp': current_temp})
-    return response.json()
+    try:
+        response = requests.get(SERVER_URL, params={'current_temp': current_temp})
+        return response.json()
+    except ConnectionError as e:
+        logger.error("Connection error={}".format(e), ErrorId.SERVER_CONNECTION_ERROR, e)
+        return None
+    except UnknownCommandException as e:
+        logger.error("Unknown command received from server={}".format(e), ErrorId.UNKNOWN_COMMAND_ERROR, e)
+        return None
+    except Exception as e:
+        logger.error("Unknown error while sending pooling request={}".format(e), ErrorId.UNKNOWN_CONNECTION_ERROR, e)
 
 
 def start_looper():
@@ -41,10 +50,6 @@ def start_looper():
             current_temp = get_current_temp()
             response_json = send_request(current_temp)
             server_response_processor.process(response_json)
-        except ConnectionError as e:
-            logger.error("Connection error={}".format(e), ErrorId.SERVER_CONNECTION_ERROR, e)
-        except UnknownCommandException as e:
-            logger.error("Unknown command received from server={}".format(e), ErrorId.UNKNOWN_COMMAND_ERROR, e)
         except Exception as e:
             logger.error("Unknown error while doing important stuff={}".format(e), ErrorId.UNKNOWN_ERROR, e)
 
