@@ -17,6 +17,7 @@ def __read_sensor(sensor_id):
         second_line = sensor_file.readline()
     temp_string = second_line.split("=")[1]
     temp_value = int(temp_string)
+    __logger.debug("Raw temperature value read from sensor {}={}".format(sensor_id, temp_value))
     return float(temp_value) / 1000.0
 
 

@@ -19,12 +19,15 @@ logger = Logger(__name__)
 
 
 def sleep(seconds):
+    logger.debug("Sleeping for {} seconds".format(REQUEST_INTERVAL_SEC))
     time.sleep(seconds)
 
 
 def get_current_temp():
     try:
-        return temp_sensor.value()
+        current_temp = temp_sensor.value()
+        logger.debug("About to send current temperature=<<{}>>".format(current_temp))
+        return current_temp
     except Exception as e:
         logger.error("Cannot read sensor temperature={}".format(e), ErrorId.TEMPERATURE_SENSOR_ERROR, e)
         return None
@@ -33,6 +36,7 @@ def get_current_temp():
 def send_request(current_temp):
     try:
         response = requests.get(SERVER_URL, params={'current_temp': current_temp})
+        logger.debug("Server response received={}, status={}".format(response.content, response.status_code))
         return response.json()
     except ConnectionError as e:
         logger.error("Connection error={}".format(e), ErrorId.SERVER_CONNECTION_ERROR, e)

@@ -4,6 +4,7 @@ import traceback
 
 from enum import Enum
 
+import config.config as config
 import emailer
 
 
@@ -22,6 +23,10 @@ class Logger:
 
     def __init__(self, file_name):
         self.file_name = file_name
+
+    def debug(self, message):
+        if config.DEBUG_ENABLED:
+            self.__print_log_message("DEBUG", message)
 
     def info(self, message):
         self.__print_log_message("INFO", message)
