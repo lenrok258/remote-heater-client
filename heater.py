@@ -6,36 +6,34 @@ if config['dev']['local-development']:
 else:
     import RPi.GPIO as GPIO
 
-logger = Logger(__name__)
+__logger = Logger(__name__)
+
+__GPIO_1 = config['heater']['gpio-1']
+__GPIO_2 = config['heater']['gpio-2']
+__GPIOS = [__GPIO_1, __GPIO_2]
+
+current_state = None
 
 
-class Heater:
-    logger = Logger(__name__)
-    GPIO_1 = config['heater']['gpio-1']
-    GPIO_2 = config['heater']['gpio-2']
-    GPIOS = [GPIO_1, GPIO_2]
+def turn_on():
+    __setup_gpio(GPIO.HIGH, "on")
 
-    def __init__(self):
-        self.previous_state = None
-        pass
 
-    def turn_on(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(Heater.GPIOS, GPIO.OUT)
-        GPIO.output(Heater.GPIOS, GPIO.HIGH)
-        self.log_if_changed("on")
+def turn_off():
+    __setup_gpio(GPIO.LOW, "off")
 
-    def turn_off(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(Heater.GPIOS, GPIO.OUT)
-        GPIO.output(Heater.GPIOS, GPIO.LOW)
-        self.log_if_changed("off")
 
-    def state(self):
-        return self.previous_state;
+def __setup_gpio(state, state_label):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(__GPIOS, GPIO.OUT)
+    GPIO.output(__GPIOS, state)
 
-    def log_if_changed(self, new_value):
-        if new_value != self.previous_state:
-            message = "Heater value changed from <<{}>> to <<{}>>".format(self.previous_state, new_value)
-            logger.info(message)
-            self.previous_state = new_value
+    __log_if_changed(state_label)
+    global current_state
+    current_state = state_label
+
+
+def __log_if_changed(new_value):
+    if new_value != current_state:
+        message = "Heater value changed from <<{}>> to <<{}>>".format(current_state, new_value)
+        __logger.info(message)

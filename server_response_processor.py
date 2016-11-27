@@ -1,18 +1,17 @@
 import emailer
+import heater
 import temp_sensor
-from heater import Heater
 from logger import Logger
 from server_response import Command
 from server_response import ServerResponse
 
 __MAX_ALLOWED_TEMP = 26
 
-__heater = Heater()
 __logger = Logger(__name__)
 
 
 def __on_turn_heater_off():
-    __heater.turn_off()
+    heater.turn_off()
 
 
 def __on_turn_heater_on(rq_temp):
@@ -33,13 +32,13 @@ def __on_turn_heater_on(rq_temp):
 
     else:
         __logger.debug("Turning/keeping heater on (requested temperature={}".format(rq_temp))
-        __heater.turn_on()
+        heater.turn_on()
 
 
 def fall_back_to_safety():
     # TODO: check heater state and if it is on - keep it on for some time
     __logger.debug("No server response, falling back to safety");
-    __heater.turn_off()
+    heater.turn_off()
 
 
 def act_on_server_response(response_json):

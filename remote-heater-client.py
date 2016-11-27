@@ -5,6 +5,7 @@ import time
 import requests
 from requests.exceptions import ConnectionError
 
+import heater
 import server_response_processor
 import temp_sensor
 from config.config import config
@@ -26,16 +27,24 @@ def sleep(seconds):
 def get_current_temp():
     try:
         current_temp = temp_sensor.value()
-        logger.debug("About to send current temperature=<<{}>>".format(current_temp))
         return current_temp
     except Exception as e:
         logger.error("Cannot read sensor temperature={}".format(e), ErrorId.TEMPERATURE_SENSOR_ERROR, e)
         return None
 
 
-def send_request(current_temp):
+def gather_rq_params():
+    params = {
+        'current_temp': get_current_temp(),
+        'heater_status': heater.current_state
+    }
+    logger.debug("About to request with params={}".format(params))
+    return params
+
+
+def send_request(rq_params):
     try:
-        response = requests.get(SERVER_URL, params={'current_temp': current_temp})
+        response = requests.get(SERVER_URL, params=rq_params)
         logger.debug("Server response received={}, status={}".format(response.content, response.status_code))
         return response.json()
     except ConnectionError as e:
@@ -51,8 +60,8 @@ def send_request(current_temp):
 def start_looper():
     while True:
         try:
-            current_temp = get_current_temp()
-            response_json = send_request(current_temp)
+            rq_params = gather_rq_params()
+            response_json = send_request(rq_params)
             server_response_processor.process(response_json)
         except Exception as e:
             logger.error("Unknown error while doing important stuff={}".format(e), ErrorId.UNKNOWN_ERROR, e)
