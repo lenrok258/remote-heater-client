@@ -1,0 +1,5 @@
+# Git pull and run <<remote heater client>>
+*/3 * * * * ~/projects/remote-heater-client/run-cron.sh & 2>&1
+
+# Delete logs in <<remote heater client>> older then 7 days
+0 10 * * * ~/projects/remote-heater-client/delete-old-logs.sh
